@@ -1,0 +1,31 @@
+<mat-toolbar class="toolbar">
+    <mat-toolbar-row>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>camera</mat-icon>
+    </button>
+    <span>ParkCam</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="add">
+        <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button class="login" [matMenuTriggerFor]="menu">
+        <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item disabled>
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>logout</mat-icon>
+          <span>Exit</span>
+        </button>       
+      </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card class="content">
+    <mat-card-content>
+        <app-cameras></app-cameras>
+    </mat-card-content>
+</mat-card>

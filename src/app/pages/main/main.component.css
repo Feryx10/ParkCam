@@ -1,0 +1,24 @@
+.toolbar{
+    box-shadow: 6px 6px 20px rgba(0,0,0,0.8);
+    color: aliceblue;
+    height: 5%;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1000;
+
+}
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.content{
+    position: sticky;
+    position: -webkit-sticky;
+  
+    margin: 15 auto;
+    color:aliceblue;
+    background-color: rgba(0, 0, 0, 0.664);
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    height: 95%;
+}
