@@ -4,25 +4,25 @@
     <form class="form">
         <div class="form_front">
             <div class="form_details">ParkCam</div>
-            <input type="text" class="input" placeholder="Email">
-            <input type="text" class="input" placeholder="Password">
-            <button class="btn">Login</button>
-            <span class="switch">Don't have an account? 
+            <input [(ngModel)]="email" type="text" class="input" placeholder="Email">
+            <input [(ngModel)]="password" type="password" class="input" placeholder="Password">
+            <button class="btn" (click)="login()">Entrar</button>
+            <span class="switch">No tienes cuenta? 
                 <label for="signup_toggle" class="signup_tog">
-                    Sign Up
+                    Registrate
                 </label>
             </span>
         </div>
         <div class="form_back">
-            <div class="form_details">SignUp</div>
+            <div class="form_details">Solicitud de Cuenta</div>
             <input type="text" class="input" placeholder="Username">
             <input type="text" class="input" placeholder="Email">
-            <input type="text" class="input" placeholder="Password">
-            <input type="text" class="input" placeholder="Confirm Password">
-            <button class="btn">Signup</button>
-            <span class="switch">Already have an account? 
+            <input type="password" class="input" placeholder="Password">
+            <input type="password" class="input" placeholder="Confirm Password">
+            <button class="btn" (click)="signup()">Enviar</button>
+            <span class="switch">Ya tienes cuenta? 
                 <label for="signup_toggle" class="signup_tog">
-                    Sign In
+                    Ingresa
                 </label>
             </span>
         </div>

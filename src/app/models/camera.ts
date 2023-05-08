@@ -1,5 +1,8 @@
+import { Capture } from "./capture";
+
 export interface Camera {
-    name: string;
+    name: string,
+    code: string,    
     link: string,
-    data: string[];
+    data: Capture[],
 }

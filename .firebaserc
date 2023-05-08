@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "tendencias2023-a74e4": {
+      "hosting": {
+        "ParkCam": [
+          "tendencias2023-a74e4"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "tendencias2023-a74e4"
+  }
+}

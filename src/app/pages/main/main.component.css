@@ -8,6 +8,10 @@
     z-index: 1000;
 
 }
+.logo{
+    box-shadow: 6px 6px 20px rgba(0,0,0,0.5);
+    margin-right: 10px;
+}
 .example-spacer {
     flex: 1 1 auto;
 }

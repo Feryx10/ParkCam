@@ -26,9 +26,12 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/purple-green.css",
-              "src/styles.css"
+              "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
+              "src/styles.css"          
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/hls.js/dist/hls.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -92,6 +95,16 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "ParkCam:build:production",
+            "firebaseProject": "tendencias2023-a74e4",
+            "firebaseHostingSite": "tendencias2023-a74e4"
           }
         }
       }
