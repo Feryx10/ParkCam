@@ -3,6 +3,8 @@ import { Camera } from 'src/app/models/camera';
 import * as moment from 'moment-timezone';
 import { Capture } from 'src/app/models/capture';
 import * as cv from "@techstark/opencv-js"
+import { CameraService } from 'src/app/services/camera.service';
+import { onSnapshot } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-cameras',
@@ -12,7 +14,11 @@ import * as cv from "@techstark/opencv-js"
 export class CamerasComponent {
   @Input() cameras: Camera[] = [];
   @Input() areas: string[] = [];
-  @Input() captures: Capture[] = [];
+
+  selectedLabel: string = "";
+  unsubscribe: any;
+
+  captures: Capture[] = [];
   imgSrc: string = "";
   imagee: any;
   numberOfPuppet: number = 0;
@@ -33,6 +39,7 @@ export class CamerasComponent {
   current: string;
 
   constructor(
+    private cameraService: CameraService,
   ) {
     this.current = moment().tz('America/Santiago').format('YYYY-MM-DD HH:mm:ss');
   }
@@ -41,7 +48,7 @@ export class CamerasComponent {
     return 'data:image/png;base64,' + base64;
   }
 
-  private refreshVideo(): void { }
+  private refreshVideo(): void {}
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
@@ -57,8 +64,8 @@ export class CamerasComponent {
     let canvas = document.createElement('canvas');
     let video = document.getElementsByTagName('video')[0];
 
-    canvas.width = 1920;
-    canvas.height = 1080;
+    canvas.width = 600;
+    canvas.height = 400;
 
     let ctx = canvas.getContext('2d');
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -79,9 +86,9 @@ export class CamerasComponent {
     const cars = new cv.RectVector();
     const carCascade = new cv.CascadeClassifier();
     carCascade.load('cascade.xml');
-    const minSize = new cv.Size(40, 40);
-    const maxSize = new cv.Size(40, 40);
-    carCascade.detectMultiScale(imgGray, cars, 1.01, 750, 2, minSize, maxSize);
+    const minSize = new cv.Size(30, 30);
+    const maxSize = new cv.Size(50, 50);
+    carCascade.detectMultiScale(imgGray, cars, 1.2, 750, 2, minSize, maxSize);
     this.numberOfPuppet = cars.size();
     for (let i = 0; i < cars.size(); i++) {
       const roiGray = imgGray.roi(cars.get(i));
@@ -98,17 +105,33 @@ export class CamerasComponent {
 
     let canvasOutput = document.getElementById('canvasOutput');
     cv.imshow(canvasOutput, imgGray);
+
+    let element = document.getElementsByTagName('canvas')[0];
+    let capture:Capture = {
+      plate: this.numberOfPuppet + " / 60",
+      date: new Date().toString(),
+      image: element.toDataURL('image/png'),
+    }
+    // this.cameraService.updateCamera(this.cameras[0].name, capture);
+    this.cameraService.addCapture(this.selectedLabel, capture);
   }
 
   detectFaces(imgSrc: string): void { }
 
   ngOnInit(): void {
+    let cameraRef = this.cameraService.getDataOfCamera('Edificio Minas');
+    this.unsubscribe = onSnapshot(cameraRef, (snapshot) => {
+      this.captures = [];
+      snapshot.forEach((doc) => {
+        this.captures.push(doc.data() as Capture);
+      });
+    });
+
     this.loadDataFile();
     this.timer = setInterval(() => {
       this.refreshVideo();
     }, 5000); // recargar cada 5 segundos 
-    console.log('CamerasCompongfhjgfhent');
-    console.log(this.cameras);
+    // this.selectedLabel = this.cameras[0].name
   }
 
   ngOnDestroy() {
@@ -120,5 +143,17 @@ export class CamerasComponent {
     const buffer = await response.arrayBuffer();
     const data = new Uint8Array(buffer);
     cv.FS_createDataFile("/", 'cascade.xml', data, true, false, false);
+  }
+
+  async onTabChanged(event: any){    
+    this.selectedLabel = event.tab.textLabel;
+    this.unsubscribe();
+    let cameraRef = this.cameraService.getDataOfCamera(event.tab.textLabel);
+    this.unsubscribe = onSnapshot(cameraRef, (snapshot) => {
+      this.captures = [];
+      snapshot.forEach((doc) => {
+        this.captures.push(doc.data() as Capture);
+      });
+    });
   }
 }

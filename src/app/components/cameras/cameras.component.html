@@ -1,4 +1,4 @@
-<mat-tab-group class="tabs" dynamicHeight>
+<mat-tab-group class="tabs" dynamicHeight (selectedTabChange)="onTabChanged($event);">
     <mat-tab *ngFor="let camera of cameras" label={{camera.name}}>    
         <mat-card class="card">
             <mat-card-header>
@@ -10,7 +10,7 @@
                 <mat-drawer-container class="example-container" autosize>
                     <mat-drawer #drawer class="example-sidenav" mode="over" position="end">                  
                       <mat-list>
-                        <div mat-subheader>Patentes Registradas</div>
+                        <!-- <div mat-subheader>Patentes Registradas</div>
                         <mat-list-item class="item" *ngFor="let data of camera.data">                            
                             <mat-grid-list cols="5" rowHeight="30px">
                                 <mat-grid-tile                           
@@ -33,7 +33,7 @@
                                 </mat-grid-tile>
                             </mat-grid-list>           
                         </mat-list-item>
-                        <mat-divider></mat-divider>
+                        <mat-divider></mat-divider> -->
                         <div mat-subheader>Capturas</div>
                         <mat-list-item *ngFor="let capture of captures">                            
                             <mat-grid-list cols="5" rowHeight="30px">

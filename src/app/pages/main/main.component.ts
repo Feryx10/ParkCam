@@ -20,10 +20,11 @@ export class MainComponent  {
   } 
 
   async loadCameras() {
-    const cameras = await this.cameraService.getCameras();
-    for (const camera of cameras) {
-      this.cameras.push(camera);
-    }
+    const cameras = this.cameraService.getCameras().then(cameras => {
+      for (const camera of cameras) {
+        this.cameras.push(camera);
+      }
+    });
   }
 
   h(): void{

@@ -4,5 +4,5 @@ export interface Camera {
     name: string,
     code: string,    
     link: string,
-    data: Capture[],
+    data?: Capture[],
 }
