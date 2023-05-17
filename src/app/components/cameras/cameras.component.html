@@ -84,7 +84,7 @@
                 </mat-drawer-container>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-button>
+                <button mat-button (click)="hola()">
                     <mat-icon>camera_enhance</mat-icon>
                 </button>
                 <button mat-button>SHARE</button>
@@ -97,3 +97,10 @@
         </mat-card>    
     </mat-tab>    
 </mat-tab-group>
+<div>
+    <input type="file" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png">
+    <br><br>
+    <!-- <img #test *ngIf="imgSrc" [src]="imgSrc" alt="Input Image">
+    <img #test *ngIf="imgSrc" [src]="imagee" alt="Input Image"> -->
+    <canvas id='canvasOutput'></canvas>
+</div>
